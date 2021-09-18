@@ -1,0 +1,46 @@
+
+# encoding: utf-8
+
+class Table(object):
+    def config_db(self,pkg):
+        tbl=pkg.table('iscritto', pkey='id', name_long='Iscritto', name_plural='Iscritti',caption_field='nome_completo')
+        self.sysFields(tbl)
+        
+    
+        tbl.column('nome', name_long='Nome')
+        tbl.column('cognome', name_long='Cognome')
+        tbl.column('data_nascita', dtype='D', name_long='Data Nascita')
+        tbl.column('sex', size=':1', name_long='Sesso')
+        tbl.column('stato_estero', name_long='Stato Nascita')
+        
+        
+        tbl.column('comune_id', name_long='Comune Nascita')
+        #comune.relation('glbl.comune.id',relation_name='iscritti',
+        #               mode='foreignkey',onDelete='raise')
+        tbl.column('provincia', size=':4', name_long='Provincia', name_short='Prov.')
+         #provincia.relation('glbl.provincia.sigla',
+        #                   relation_name='iscritti',
+         #                  mode='foreignkey',
+          #                 onDelete='raise')
+
+        tbl.column('codice_fiscale', name_long='Codice Fiscale')
+
+        tbl.column('data_iscrizione', dtype='D', name_long='Data Iscrizione')
+        tbl.formulaColumn('nome_completo',"$nome || ' ' || $cognome")
+        
+        
+        tbl.column('anni', dtype='N', name_long='Anni')
+        tbl.column('categoria', name_long='Categoria')
+
+        tbl.column('peso', dtype='N', name_long='Peso')
+        tbl.column('altezza', dtype='N', name_long='Altezza')
+        tbl.column('ruolo', name_long='Ruolo')
+        tbl.column('voto', name_long='Valutazione')
+        tbl.column('photo_url', dtype='P',name_long='Foto')
+        tbl.column('email', name_long='Email')
+        tbl.column('note_iscritto',name_long='Note')
+        #tbl.column('modulo_iscrizione', name_long='Iscrizione',dtype='B')
+        #tbl.column('terra', name_long='Terra')
+
+    def defaultValues(self):
+        return dict(stato_estero='ITALIA')
