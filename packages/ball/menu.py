@@ -16,7 +16,7 @@ def pagamenti(root,application=None):
 def tabelle_fiscali(root,application=None):
     ball1 = root.branch(u"Tabelle fiscali")
     ball1.thpage(u"!!Tabella Fiscale Allenatori", table="ball.allenatore_tabella_fiscale")
-    ball1.thpage(u"!!Tabella Fiscale Genitori", table="ball.genitore_tabella_fiscale")
+    #ball1.thpage(u"!!Tabella Fiscale Genitori", table="ball.genitore_tabella_fiscale")
     ball1.thpage(u"!!Salario annuale allenatori", table="ball.allenatore_compenso_annuale")
 
 def config(root,application=None):
