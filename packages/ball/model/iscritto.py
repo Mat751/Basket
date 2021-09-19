@@ -42,5 +42,18 @@ class Table(object):
         #tbl.column('modulo_iscrizione', name_long='Iscrizione',dtype='B')
         #tbl.column('terra', name_long='Terra')
 
+        tbl.column('nome_genitore',name_long='Nome genitore')
+        tbl.column('cognome_genitore',name_long='Cognome genitore')
+        tbl.column('codice_fiscale_genitore',name_long='Codice Fiscale gen.')
+        tbl.column('pagamento', name_long='Tipo pagamento')
+        tbl.column('pagamento2', name_long='Tipo pagamento')
+        tbl.column('pagamento_iscritto', dtype='B', name_long='Pagamento iscritto')
+        
+
+        tbl.column('importo1', dtype='N', name_long='Importo 1:')
+        tbl.column('data1', dtype='D', name_long='Data 1:')
+        tbl.column('importo2', dtype='N', name_long='Importo 2:')
+        tbl.column('data2', dtype='D', name_long='Data 2:')
+
     def defaultValues(self):
         return dict(stato_estero='ITALIA')
