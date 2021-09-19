@@ -106,6 +106,7 @@ class Form(BaseComponent):
         fb.field('stato_estero')
         fb.field('provincia')
         fb.field('comune_id')
+        fb.field('codice_fiscale')
         
         # condition='$sigla_provincia=:provincia',
         #        condition_provincia='^.provincia')
@@ -113,7 +114,7 @@ class Form(BaseComponent):
         #fb.field('anni',edit=False)
         
         fb.field('peso',lbl='peso (kg)')
-        fb.field('altezza',lbl='Altezza (cm)',colspan=2)
+        fb.field('altezza',lbl='Altezza (cm)')
         
         ruolo = 'Playmaker:Playmaker,Ala:Ala,Guardia:Guardia,Pivot:Pivot'
 
@@ -124,7 +125,7 @@ class Form(BaseComponent):
         fb.field('email')
 
         valori = 'Scarso:1,Sufficiente:2,Buono:3,Discreto:4,Ottimo:5'
-        center = bc.tabContainer(region='left', title='Valutazioni',width='70%',margin='4px',datapath=".record")
+        center = bc.tabContainer(region='left', title='Valutazioni',width='60%',margin='4px',datapath=".record")
         #center = bc.contentPane(region='center',)
         center = center.tabContainer(title='Valutazioni',region='center')
         fb = center.formbuilder(cols=2, border_spacing='4px',width='auto')
@@ -146,6 +147,31 @@ class Form(BaseComponent):
         fb.simpleTextArea(value='^.note',
         lbl='Commenti: ',width='400px',height='200px',colspan=2)
 
+        #fb = top.borderContainer(cols=3, border_spacing='4px',title='Genitore')
+        center = bc.tabContainer(region='right', title='Valutazioni',width='35%',margin='4px',datapath=".record")
+        #center = bc.contentPane(region='center',)
+        center = center.tabContainer(title='Genitori',region='center')
+        fb = center.formbuilder(cols=1, border_spacing='4px',width='auto')
+
+        fb.field('nome_genitore')
+        fb.field('cognome_genitore')
+        fb.field('codice_fiscale_genitore')
+        mod = 'Paypal:Paypal,Bonifico:Bonifico,Assegno:Assegno'   
+        
+       
+        fb.checkboxtext('^.pagamento_iscritto',lbl='Pagamento Iscritto',values='Confermato')
+        fb.filteringSelect('^.pagamento',lbl='Tipo pagamento 1: ', 
+                       tooltip="""Seleziona ruolo""",
+                       values=mod)
+        
+        fb.field('importo1')
+        fb.field('data1')
+
+        fb.filteringSelect('^.pagamento2',lbl='Tipo pagamento 2: ', 
+                       tooltip="""Seleziona ruolo""",
+                       values=mod)
+        fb.field('importo2')
+        fb.field('data2')
         #modulo iscrizione a destra
         #right = bc.tabContainer(region='right', title='Valutazioni',width='20%',margin='4px',datapath=".record")
         #right = right.tabContainer(title='Modulo iscrizione',region='center',heigh='80px')
