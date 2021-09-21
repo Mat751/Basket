@@ -5,7 +5,7 @@
 def anagrafica(root,application=None):
     ball = root.branch(u"Anagrafica")
     ball.thpage(u"!!Iscritti", table="ball.iscritto")
-    ball.thpage(u"!!Genitori", table='ball.genitore')
+    #ball.thpage(u"!!Genitori", table='ball.genitore')
     ball.thpage(u"!!Allenatori", table="ball.allenatore")
 
 def pagamenti(root,application=None):

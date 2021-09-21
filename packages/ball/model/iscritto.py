@@ -44,13 +44,21 @@ class Table(object):
         tbl.column('codice_fiscale_genitore',name_long='Codice Fiscale gen.')
         tbl.column('pagamento', name_long='Tipo pagamento')
         tbl.column('pagamento2', name_long='Tipo pagamento')
-        tbl.column('pagamento_iscritto',name_long='Pagamento:')
-        
+        tbl.column('pagamento_iscritto',name_long='Pagamento:')    
 
         tbl.column('importo1', dtype='N', name_long='Importo 1:')
         tbl.column('data1', dtype='D', name_long='Data 1:')
         tbl.column('importo2', dtype='N', name_long='Importo 2:')
         tbl.column('data2', dtype='D', name_long='Data 2:')
+
+        tbl.formulaColumn('pag_completo',"""CASE WHEN $importo1 IS NOT NULL AND
+                                            $importo2 IS NOT NULL THEN TRUE
+                                            WHEN $importo1 IS NOT NULL AND 
+                                            $importo2 IS NULL THEN FALSE
+                                            WHEN $importo1 IS NULL AND
+                                            $importo2 IS NOT NULL THEN FALSE
+                                            ELSE NULL END""",
+                                            dtype='B',name_long='Pagamenti anno corrente')
 
     def defaultValues(self):
         return dict(stato_estero='ITALIA')

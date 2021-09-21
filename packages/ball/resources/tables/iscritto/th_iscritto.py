@@ -22,6 +22,8 @@ class View(BaseComponent):
         anag.fieldcell('provincia')
         anag.fieldcell('comune_id')
         anag.fieldcell('codice_fiscale')
+        paf = r.columnset('pag', name='PAGAMENTI', color='white', font_weight='bold', background='darkred')
+        paf.fieldcell('pag_completo',semaphore=True)
 
         isc= r.columnset('isc', name='ISCRIZIONE', color='white', font_weight='bold', background='orange')
 
@@ -187,6 +189,8 @@ class Form(BaseComponent):
         fb.field('nome_genitore')
         fb.field('cognome_genitore')
         fb.field('codice_fiscale_genitore')
+        fb.div('^.pag_completo',lbl='Stato pagamenti: ',
+                _virtual_column='$pag_completo',format='semaphore',dtype='B')
     
     def pagamenti(self,center,anno=None):
         center = center.tabContainer(title=f'Pagamenti {anno}',region='center')
