@@ -60,5 +60,10 @@ class Table(object):
                                             ELSE NULL END""",
                                             dtype='B',name_long='Pagamenti anno corrente')
 
+        tbl.formulaColumn('num_figli',select=dict(table='ball.iscritto',
+                                                columns='COUNT(*)',
+                                                where="$codice_fiscale_genitore=#THIS.codice_fiscale_genitore AND $pagamento_iscritto='Genitore'"),
+                                    dtype='L',name_long='Figli a carico del genitore: ')
+
     def defaultValues(self):
         return dict(stato_estero='ITALIA')

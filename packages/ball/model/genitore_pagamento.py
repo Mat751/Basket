@@ -7,16 +7,23 @@ class Table(object):
         self.sysFields(tbl)
         
         tbl.column('protocollo', name_long='Protocollo')
-        tbl.column('codice_genitore',size='22', group='_', name_long='Genitore'
-                    ).relation('genitore.id', relation_name='pagamenti_genitori', mode='foreignkey', onDelete='cascade')
-        tbl.column('data', dtype='D', name_long='Data Pagamento')
-        tbl.column('modalita', name_long='Tipo pagamento')
-        tbl.column('importo', dtype='N', name_long='Importo')
-        tbl.column('note', name_long='Note')
-        tbl.column('entrate_uscite', name_long='Entrate o Uscite')
+        tbl.column('genitore', name_long='Genitore')
+        tbl.column('gen_cod_fisc', name_long='Codice fiscale')
+        tbl.column('iscritto', name_long='iscritto')
+        tbl.column('isc_cod_fisc', name_long='Iscritto CF')
+
+        tbl.column('data', dtype='D', name_long='Data Pagamento 1')
+        tbl.column('modalita', name_long='Tipo pagamento 1')
+        tbl.column('importo', dtype='N', name_long='Importo 1')
+        
+        tbl.column('data2', dtype='D', name_long='Data Pagamento 2')
+        tbl.column('modalita2', name_long='Tipo pagamento 2')
+        tbl.column('importo2', dtype='N', name_long='Importo 2')
+        tbl.column('totale', dtype='N', name_long='Totale')
+        
 
     def defaultValues(self):
-        return dict(data=self.db.workdate,entrate_uscite="Uscite")
+        return dict(data=self.db.workdate)
 
     def counter_protocollo(self, record=None):
       pars = dict(format='$K$YY.$NNNNN', period='YY', code='M',

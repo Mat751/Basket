@@ -186,20 +186,21 @@ class Form(BaseComponent):
     def anagrafica(self,center):
         center = center.tabContainer(title=f'Angrafica genitori',region='center')
         fb = center.formbuilder(cols=1, border_spacing='4px',width='auto')
+        fb.radiobuttontext('^.pagamento_iscritto',lbl='Pagamento: ',
+                        values='Ragazzo:Ragazzo,Genitore:Genitore')   
         fb.field('nome_genitore')
         fb.field('cognome_genitore')
         fb.field('codice_fiscale_genitore')
         fb.div('^.pag_completo',lbl='Stato pagamenti: ',
                 _virtual_column='$pag_completo',format='semaphore',dtype='B')
-    
+        fb.div('^.num_figli',lbl='Figli a carico del genitore: ',_virtual_column='$num_figli',
+                 dtype='L')
+
     def pagamenti(self,center,anno=None):
         center = center.tabContainer(title=f'Pagamenti {anno}',region='center')
         fb = center.formbuilder(cols=1, border_spacing='4px',width='auto')
 
-        fb.radiobuttontext('^.pagamento_iscritto',lbl='Pagamento: ',
-                        values='Ragazzo:Ragazzo,Genitore:Genitore')
-        mod = 'Paypal:Paypal,Bonifico:Bonifico,Assegno:Assegno'   
-        
+        mod = 'Paypal:Paypal,Bonifico:Bonifico,Assegno:Assegno'
         fb.filteringSelect('^.pagamento',lbl='Tipo pagamento 1: ', 
                        tooltip="""Seleziona ruolo""",
                        values=mod)

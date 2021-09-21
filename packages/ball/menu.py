@@ -11,7 +11,7 @@ def anagrafica(root,application=None):
 def pagamenti(root,application=None):
     ball1 = root.branch(u"Pagamenti")
     ball1.thpage(u"!!Pagamenti Allenatori", table="ball.allenatore_compenso")
-    ball1.thpage(u"!!Pagamenti Genitori", table="ball.genitore_pagamento")
+    ball1.thpage(u"!!Pagamenti iscritti/genitori", table="ball.genitore_pagamento")
     
 def tabelle_fiscali(root,application=None):
     ball1 = root.branch(u"Tabelle fiscali")
