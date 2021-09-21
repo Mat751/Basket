@@ -148,30 +148,15 @@ class Form(BaseComponent):
         lbl='Commenti: ',width='400px',height='200px',colspan=2)
 
         #fb = top.borderContainer(cols=3, border_spacing='4px',title='Genitore')
-        center = bc.tabContainer(region='right', title='Valutazioni',width='35%',margin='4px',datapath=".record")
-        #center = bc.contentPane(region='center',)
-        center = center.tabContainer(title='Genitori',region='center')
-        fb = center.formbuilder(cols=1, border_spacing='4px',width='auto')
-
-        fb.field('nome_genitore')
-        fb.field('cognome_genitore')
-        fb.field('codice_fiscale_genitore')
-        mod = 'Paypal:Paypal,Bonifico:Bonifico,Assegno:Assegno'   
         
-       
-        fb.checkboxtext('^.pagamento_iscritto',lbl='Pagamento Iscritto',values='Confermato')
-        fb.filteringSelect('^.pagamento',lbl='Tipo pagamento 1: ', 
-                       tooltip="""Seleziona ruolo""",
-                       values=mod)
+        center = bc.tabContainer(region='right', title='Valutazioni',width='35%',
+                                 height='50%',margin='4px',datapath=".record")
         
-        fb.field('importo1')
-        fb.field('data1')
+        self.anagrafica(center)    
+        self.pagamenti(center,anno="21/22")
+        #self.pagamenti(center,anno="22/23")
 
-        fb.filteringSelect('^.pagamento2',lbl='Tipo pagamento 2: ', 
-                       tooltip="""Seleziona ruolo""",
-                       values=mod)
-        fb.field('importo2')
-        fb.field('data2')
+    
         #modulo iscrizione a destra
         #right = bc.tabContainer(region='right', title='Valutazioni',width='20%',margin='4px',datapath=".record")
         #right = right.tabContainer(title='Modulo iscrizione',region='center',heigh='80px')
@@ -195,6 +180,34 @@ class Form(BaseComponent):
         btn = fb.button('AGGIORNA TUTTI GLI ISCRITTI',color='red')
         btn.dataRpc('.risposta',self.getTime)
         fb.div('^.risposta')
+
+    def anagrafica(self,center):
+        center = center.tabContainer(title=f'Angrafica genitori',region='center')
+        fb = center.formbuilder(cols=1, border_spacing='4px',width='auto')
+        fb.field('nome_genitore')
+        fb.field('cognome_genitore')
+        fb.field('codice_fiscale_genitore')
+    
+    def pagamenti(self,center,anno=None):
+        center = center.tabContainer(title=f'Pagamenti {anno}',region='center')
+        fb = center.formbuilder(cols=1, border_spacing='4px',width='auto')
+
+        fb.radiobuttontext('^.pagamento_iscritto',lbl='Pagamento: ',
+                        values='Ragazzo:Ragazzo,Genitore:Genitore')
+        mod = 'Paypal:Paypal,Bonifico:Bonifico,Assegno:Assegno'   
+        
+        fb.filteringSelect('^.pagamento',lbl='Tipo pagamento 1: ', 
+                       tooltip="""Seleziona ruolo""",
+                       values=mod)
+        
+        fb.field('importo1')
+        fb.field('data1')
+
+        fb.filteringSelect('^.pagamento2',lbl='Tipo pagamento 2: ', 
+                       tooltip="""Seleziona ruolo""",
+                       values=mod)
+        fb.field('importo2')
+        fb.field('data2')
 
     def allegati(self,pane):
         pane.attachmentGrid()

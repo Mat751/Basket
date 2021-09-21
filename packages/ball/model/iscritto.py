@@ -44,7 +44,7 @@ class Table(object):
         tbl.column('codice_fiscale_genitore',name_long='Codice Fiscale gen.')
         tbl.column('pagamento', name_long='Tipo pagamento')
         tbl.column('pagamento2', name_long='Tipo pagamento')
-        tbl.column('pagamento_iscritto', dtype='B', name_long='Pagamento iscritto')
+        tbl.column('pagamento_iscritto',name_long='Pagamento:')
         
 
         tbl.column('importo1', dtype='N', name_long='Importo 1:')
