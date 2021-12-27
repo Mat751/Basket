@@ -50,6 +50,9 @@ class View(BaseComponent):
         importo.fieldcell('pagamento2')
         importo.fieldcell('importo2')
         importo.fieldcell('data2')
+        importo.fieldcell('pagamento3')
+        importo.fieldcell('importo3')
+        importo.fieldcell('data3')
 
         #r.fieldcell('modulo_iscrizione', format_trueclass='greenLight', format_nullclass='yellowLight', format_falseclass='redLight')
 
