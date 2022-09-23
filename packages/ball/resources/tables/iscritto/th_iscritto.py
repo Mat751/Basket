@@ -37,22 +37,22 @@ class View(BaseComponent):
 
         carac= r.columnset('carac', name='CARATTERISTICHE', color='white', font_weight='bold', background='darkgreen')
 
-        carac.fieldcell('peso')
+        carac.fieldcell('telefono')
         carac.fieldcell('altezza')
         carac.fieldcell('ruolo')
         carac.fieldcell('voto')
         #r.fieldcell('terra')
 
         importo = r.columnset('importo', name='IMPORTI', color='white', font_weight='bold', background='green')
-        importo.fieldcell('pagamento')
-        importo.fieldcell('importo1')
-        importo.fieldcell('data1')
-        importo.fieldcell('pagamento2')
-        importo.fieldcell('importo2')
-        importo.fieldcell('data2')
-        importo.fieldcell('pagamento3')
-        importo.fieldcell('importo3')
-        importo.fieldcell('data3')
+        importo.fieldcell('pagamento1_22')
+        importo.fieldcell('importo1_22')
+        importo.fieldcell('data1_22')
+        importo.fieldcell('pagamento2_23')
+        importo.fieldcell('importo2_23')
+        importo.fieldcell('data2_23')
+        importo.fieldcell('pagamento3_23')
+        importo.fieldcell('importo3_23')
+        importo.fieldcell('data3_23')
 
         #r.fieldcell('modulo_iscrizione', format_trueclass='greenLight', format_nullclass='yellowLight', format_falseclass='redLight')
 
@@ -137,7 +137,7 @@ class Form(BaseComponent):
         #fb.field('codice_fiscale')
         #fb.field('anni',edit=False)
         
-        fb.field('peso',lbl='peso (kg)')
+        fb.field('telefono',lbl='Cell.')
         fb.field('altezza',lbl='Altezza (cm)')
         
         ruolo = 'Playmaker:Playmaker,Ala:Ala,Guardia:Guardia,Pivot:Pivot'
@@ -155,7 +155,7 @@ class Form(BaseComponent):
         fb = center.formbuilder(cols=2, border_spacing='4px',width='auto')
 
         #categorie='MCB:Micro Basket,MBA:Mini Basket A,MBB:Mini Basket B,U13:Under 13,U14:Under 14,U15:Under 15,U16:Under 16,U17:Under 17,U19:Under 19'
-        categorie='MCB:Micro Basket,MBA:Mini Basket A,MBB:Mini Basket B,U13:Under 13,U14:Under 14,U15:Under 15,U16:Under 16,U17:Under 17,U19:Under 19'
+        categorie='2016:2016,2015:2015,2014:2014,2013:2013,2012:2012,2011:2011,U13:Under 13,U14:Under 14,U15:Under 15,U17:Under 17,U18:Under 18,U19:Under 19'
         fb.filteringSelect('^.ruolo',lbl='Ruolo: ', 
                        tooltip="""Seleziona ruolo""",
                        values=ruolo)
@@ -177,8 +177,8 @@ class Form(BaseComponent):
                                  height='50%',margin='4px',datapath=".record")
         
         self.anagrafica(center)    
-        self.pagamenti(center,anno="21/22")
-        #self.pagamenti(center,anno="22/23")
+        #self.pagamenti(center,anno="21/22")
+        self.pagamenti(center,anno="22/23")
 
     
         #modulo iscrizione a destra
@@ -223,24 +223,24 @@ class Form(BaseComponent):
         fb = center.formbuilder(cols=1, border_spacing='4px',width='auto')
 
         mod = 'Paypal:Paypal,Bonifico:Bonifico,Assegno:Assegno,Altro:Altro'
-        fb.filteringSelect('^.pagamento',lbl='Tipo pagamento 1: ', 
+        fb.filteringSelect('^.pagamento1_22',lbl='Tipo pagamento 1: ', 
                        tooltip="""Seleziona ruolo""",
                        values=mod)
         
-        fb.field('importo1')
-        fb.field('data1')
+        fb.field('importo1_22')
+        fb.field('data1_22')
 
-        fb.filteringSelect('^.pagamento2',lbl='Tipo pagamento 2: ', 
+        fb.filteringSelect('^.pagamento2_23',lbl='Tipo pagamento 2: ', 
                        tooltip="""Seleziona ruolo""",
                        values=mod)
-        fb.field('importo2')
-        fb.field('data2')
+        fb.field('importo2_23')
+        fb.field('data2_23')
 
-        fb.filteringSelect('^.pagamento3',lbl='Tipo pagamento 3: ', 
+        fb.filteringSelect('^.pagamento3_23',lbl='Tipo pagamento 3: ', 
                        tooltip="""Seleziona ruolo""",
                        values=mod)
-        fb.field('importo3')
-        fb.field('data3')
+        fb.field('importo3_23')
+        fb.field('data3_23')
 
 
     def allegati(self,pane):

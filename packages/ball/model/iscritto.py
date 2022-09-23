@@ -32,7 +32,7 @@ class Table(object):
         tbl.column('anni', dtype='N', name_long='Anni')
         tbl.column('categoria', name_long='Categoria')
 
-        tbl.column('peso', dtype='N', name_long='Peso')
+        tbl.column('telefono', dtype='N', name_long='Telefono')
         tbl.column('altezza', dtype='N', name_long='Altezza')
         tbl.column('ruolo', name_long='Ruolo')
         tbl.column('voto', name_long='Valutazione')
@@ -45,9 +45,23 @@ class Table(object):
         tbl.column('nome_genitore',name_long='Nome genitore')
         tbl.column('cognome_genitore',name_long='Cognome genitore')
         tbl.column('codice_fiscale_genitore',name_long='Codice Fiscale gen.')
+        
         tbl.column('pagamento', name_long='Tipo pagamento')
         tbl.column('pagamento2', name_long='Tipo pagamento')
         tbl.column('pagamento3', name_long='Tipo pagamento')
+
+        tbl.column('pagamento1_22', name_long='Tipo pagamento')
+        tbl.column('pagamento2_23', name_long='Tipo pagamento')
+        tbl.column('pagamento3_23', name_long='Tipo pagamento')
+
+        tbl.column('importo1_22', dtype='N', name_long='Importo 1:')
+        tbl.column('data1_22', dtype='D', name_long='Data 1:')
+        tbl.column('importo2_23', dtype='N', name_long='Importo 2:')
+        tbl.column('data2_23', dtype='D', name_long='Data 2:')
+        tbl.column('importo3_23', dtype='N', name_long='Importo 3:')
+        tbl.column('data3_23', dtype='D', name_long='Data 3:')
+
+
         tbl.column('pagamento_iscritto',name_long='Pagamento:')    
 
         tbl.column('importo1', dtype='N', name_long='Importo 1:')
@@ -57,12 +71,12 @@ class Table(object):
         tbl.column('importo3', dtype='N', name_long='Importo 3:')
         tbl.column('data3', dtype='D', name_long='Data 3:')
 
-        tbl.formulaColumn('pag_completo',"""CASE WHEN $importo1 IS NOT NULL AND
-                                            $importo2 IS NOT NULL THEN TRUE
-                                            WHEN $importo1 IS NOT NULL AND 
-                                            $importo2 IS NULL THEN FALSE
-                                            WHEN $importo1 IS NULL AND
-                                            $importo2 IS NOT NULL THEN FALSE
+        tbl.formulaColumn('pag_completo',"""CASE WHEN $importo1_22 IS NOT NULL AND
+                                            $importo2_23 IS NOT NULL THEN TRUE
+                                            WHEN $importo1_22 IS NOT NULL AND 
+                                            $importo2_23 IS NULL THEN FALSE
+                                            WHEN $importo1_22 IS NULL AND
+                                            $importo2_23 IS NOT NULL THEN FALSE
                                             ELSE NULL END""",
                                             dtype='B',name_long='Pagamenti anno corrente')
 
