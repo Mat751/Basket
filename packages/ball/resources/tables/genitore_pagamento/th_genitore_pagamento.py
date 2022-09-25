@@ -4,6 +4,7 @@
 from gnr.web.gnrbaseclasses import BaseComponent
 from gnr.core.gnrdecorator import public_method
 
+
 class View(BaseComponent):
 
     def th_struct(self,struct):
@@ -11,15 +12,11 @@ class View(BaseComponent):
         r.fieldcell('protocollo')
         r.fieldcell('genitore')
         r.fieldcell('gen_cod_fisc')
-        r.fieldcell('iscritto')
+        r.fieldcell('codice_iscritto')
         r.fieldcell('isc_cod_fisc')
         r.fieldcell('data')
         r.fieldcell('modalita')
         r.fieldcell('importo')
-        r.fieldcell('data2')
-        r.fieldcell('modalita2')
-        r.fieldcell('importo2')
-        r.fieldcell('totale')
 
     def th_order(self):
         return 'protocollo'
@@ -37,16 +34,76 @@ class Form(BaseComponent):
         fb.field('protocollo')
         fb.field('genitore')
         fb.field('gen_cod_fisc')
-        fb.field('iscritto')
+        fb.field('codice_iscritto')
         fb.field('isc_cod_fisc')
         fb.field('data')
         fb.field('modalita')
         fb.field('importo')
-        fb.field('data2')
-        fb.field('modalita2')
-        fb.field('importo2')
-        fb.field('totale')
 
 
     def th_options(self):
         return dict(dialog_height='400px', dialog_width='600px')
+
+
+class ViewFromIscrittoPagamenti2021(BaseComponent):
+
+    def th_struct(self,struct):
+        r = struct.view().rows()
+        r.fieldcell('protocollo')
+        r.fieldcell('genitore')
+        r.fieldcell('gen_cod_fisc')
+        r.fieldcell('iscritto')
+        r.fieldcell('isc_cod_fisc')
+        r.fieldcell('data')
+        r.fieldcell('modalita')
+        r.fieldcell('importo',totalize=True)
+
+    @public_method
+    def th_applymethod(self,selection=None):
+        def cb(row):
+            if row['data'].year == 2021:
+                return dict(importo=row['importo'])
+        selection.apply(cb)
+
+
+class ViewFromIscrittoPagamenti2022(BaseComponent):
+
+    def th_struct(self,struct):
+        r = struct.view().rows()
+        r.fieldcell('protocollo')
+        r.fieldcell('genitore')
+        r.fieldcell('gen_cod_fisc')
+        r.fieldcell('iscritto')
+        r.fieldcell('isc_cod_fisc')
+        r.fieldcell('data')
+        r.fieldcell('modalita')
+        r.fieldcell('importo',totalize=True)
+
+    @public_method
+    def th_applymethod(self,selection=None):
+        def cb(row):
+            if row['data'].year == 2022:
+                return dict(importo=row['importo'])
+        selection.apply(cb)
+
+
+
+class ViewFromIscrittoPagamenti2023(BaseComponent):
+
+    def th_struct(self,struct):
+        r = struct.view().rows()
+        r.fieldcell('protocollo')
+        r.fieldcell('genitore')
+        r.fieldcell('gen_cod_fisc')
+        r.fieldcell('iscritto')
+        r.fieldcell('isc_cod_fisc')
+        r.fieldcell('data')
+        r.fieldcell('modalita')
+        r.fieldcell('importo',totalize=True)
+
+    @public_method
+    def th_applymethod(self,selection=None):
+        def cb(row):
+            if row['data'].year == 2023:
+                return dict(importo=row['importo'])
+        selection.apply(cb)

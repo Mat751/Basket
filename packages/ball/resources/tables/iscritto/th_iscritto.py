@@ -5,7 +5,6 @@ from gnr.web.gnrbaseclasses import BaseComponent
 from gnr.app.gnrapp import GnrApp
 from gnr.core.gnrdecorator import public_method,customizable
 from datetime import date as dat
-import ftplib
 
 
 class View(BaseComponent):
@@ -108,6 +107,9 @@ class Form(BaseComponent):
         tc = form.center.tabContainer(margin='2px')
         self.dati_iscritto(tc.borderContainer(title='Dati iscritto'))
         self.allegati(tc.contentPane(title='Allegati iscritto'))
+        self.pagamenti2021(tc.contentPane(title='Pagamenti 2021'))
+        self.pagamenti2022(tc.contentPane(title='Pagamenti 2022'))
+        self.pagamenti2023(tc.contentPane(title='Pagamenti 2023'))
 
 
     @customizable    
@@ -179,31 +181,13 @@ class Form(BaseComponent):
         self.anagrafica(center)    
         #self.pagamenti(center,anno="21/22")
         self.pagamenti(center,anno="22/23")
-
     
-        #modulo iscrizione a destra
-        #right = bc.tabContainer(region='right', title='Valutazioni',width='20%',margin='4px',datapath=".record")
-        #right = right.tabContainer(title='Modulo iscrizione',region='center',heigh='80px')
 
-        #right.div('^#FORM.warning.modulo_iscrizione', _class='^#FORM.warning.css_class', colspan=2)
-        #right.dataController( """var warning,cls;
-         #                   if(modulo_iscrizione){warning='Modulo privacy già allegato';
-         #                      cls='verde';}
-         #                   else{
-         #                   warning='Manca il modulo privacy del paziente!';
-         #                   cls='rosso';
-         #                  }
-         #                  SET #FORM.warning.modulo_iscrizione= warning;
-         #                  SET #FORM.warning.css_class= cls;""",
-         #                  modulo_iscrizione='^.modulo_iscrizione',
-         #                 _virtual_column='modulo_iscrizione_presente',
-         #                  saved='^#FORM.controller.saved')
-
-        bottom = bc.contentPane(region='bottom',datapath='.record')
-        fb = bottom.formbuilder(cols=3,border_spacing='10px')
-        btn = fb.button('AGGIORNA TUTTI GLI ISCRITTI',color='red')
-        btn.dataRpc('.risposta',self.getTime)
-        fb.div('^.risposta')
+        # bottom = bc.contentPane(region='bottom',datapath='.record')
+        # fb = bottom.formbuilder(cols=3,border_spacing='10px')
+        # btn = fb.button('SALVA PAGAMENTI',color='red')
+        # btn.dataRpc('.risposta',self.getTime)
+        # fb.div('^.risposta')
 
     def anagrafica(self,center):
         center = center.tabContainer(title=f'Angrafica genitori',region='center')
@@ -242,55 +226,94 @@ class Form(BaseComponent):
         fb.field('importo3_23')
         fb.field('data3_23')
 
+        fb = center.formbuilder(cols=3, border_spacing='10px',width='auto')
+        btn = fb.button('OTTIENI PAGAMENTI ANNO SOLARE',color='red')
+        btn.dataRpc('.risposta',self.getTime)
+        fb.div('^.risposta')
+
 
     def allegati(self,pane):
         pane.attachmentGrid()
         
-        #tc1 = bc.tabContainer(region = 'center',margin='2px',datapath=".record")
-        
 
-        #tab1 = tc1.contentPane(title='Note')
-        #tab1.simpleTextArea(value='^.note_iscritto',editor=True)
-
-        #tc1.contentPane(title='Foto').img(src="^.photo_url",
-        #       crop_height='200px',
-        #       crop_width='200px',
-        #       margin='5px',
-        #       crop_border='2px dotted silver',
-        #       crop_rounded=6,
-        #       edit=True,
-        #       placeholder=True,
-               #upload_folder='*', #con asterisco salvo in database
-               # ma perdo possibilità di ridurre immagine
-        #       upload_folder='site:/home/zattew/Immagini',
-        #       upload_filename='=#FORM.record.nome_completo',
-        #       colspan=2)
-
-        
 
     @public_method
     def getTime(self):
-        #pasw='5H%5rsz6&mr97Yh1'
-        #with ftplib.FTP('erp.pallacanestrocuoricinocardano.com', 'palcancarerp21', pasw) as ftp:
-        #    ip=ftp.getwelcome().split(" ")[4]
-        #    ip = ip.split('[')[1]
-        #    ip = ip.split(']')[0]
-        #    return ip
-        #    ftp.close()
-        #db = GnrApp('mybasket').db
-        #tbliscritto= db.table('ball.iscritto')
-        #f = tbliscritto.query(columns='$terra,$stato_estero').fetch()
-        #for r in f:
-        #    r = dict(r)
-        #    oldr = dict(r)
-        #    if r['stato_estero'] != "ITALIA":
-        #        r['terra'] = 'cancellato'
-        #    else:
-        #        r['terra'] = 'cancellato'
-        #    tbliscritto.raw_update(r,oldr,pkey=r['pkey'])
-        #db.commit()
-        return '... ATTENDI ... MA NULLA ACCADE!'
+        message = self.pagamenti_genitori()
+        return message
 
 
     def th_options(self):
         return dict(dialog_height='400px', dialog_width='600px')
+
+
+    def pagamenti2021(self,pane):
+        pane.plainTableHandler(relation='@iscrittipagamenti',viewResource='ViewFromIscrittoPagamenti2021')
+
+    def pagamenti2022(self,pane):
+        pane.plainTableHandler(relation='@iscrittipagamenti',viewResource='ViewFromIscrittoPagamenti2022')
+
+    def pagamenti2023(self,pane):
+        pane.plainTableHandler(relation='@iscrittipagamenti',viewResource='ViewFromIscrittoPagamenti2023')
+
+
+    def pagamenti_genitori(self):
+        conta = 0
+        db = GnrApp('mybasket').db
+        iscritti= db.table('ball.iscritto')
+        pagamenti_genitore= db.table('ball.genitore_pagamento')
+        informazioni_pagamenti = iscritti.query(columns='$id,$nome,$cognome,$codice_fiscale,$nome_genitore,$cognome_genitore,$codice_fiscale_genitore,$pagamento,$pagamento2,$pagamento3,$pagamento1_22,$pagamento2_23,$pagamento3_23,$importo1_22,$data1_22,$importo2_23,$data2_23,$importo3_23,$data3_23,$pagamento_iscritto,$importo1,$data1,$importo2,$data2,$importo3,$data3').fetch()
+        for r in informazioni_pagamenti:
+            r = dict(r)
+            pagamento, importo, data= self.controllo_importo_pagamento(r)
+            if pagamento != [] and importo != [] and data != []:
+                for number_of_payment in range(len(pagamento)):
+                    if r['codice_fiscale_genitore']:
+                                new_row= { 'genitore':r['cognome_genitore'] + ' ' + r['nome_genitore'],
+                                           'gen_cod_fisc':r['codice_fiscale_genitore'],
+                                           'codice_iscritto': r['id'],
+                                           'iscritto': r['cognome'] + ' ' + r['nome'],
+                                           'isc_cod_fisc': r['codice_fiscale'],
+                                           'data': r[data[number_of_payment]],
+                                           'modalita': r[pagamento[number_of_payment]],
+                                           'importo': r[importo[number_of_payment]]}
+                                if self.check_if_exists(pagamenti_genitore, new_row):
+                                    conta += 1
+                                    pagamenti_genitore.insert(new_row)
+        db.commit()
+        if conta > 0:
+            return 'PAGAMENTI TRASFERITI NELLA TABELLA PAGAMENTI GENITORI.\nTROVERAI CARICATI I PAGAMENTI ANCHE IN SEZIONE PAGAMENTI IN ALTO.'
+        return '\nNON CI SONO AGGIORNAMENTI:\n\t-INSERISCI GENITORE E CODICE FISCALE\n\t-INSERISCI PAGAMENTI\n\t-SALVA PAGAMENTI (IN ALTO A DESTRA)'
+
+
+    def controllo_importo_pagamento(self,row):
+        pagamento = []
+        importo = []
+        data_all = []
+        for data in ['data1','data2','data3','data1_22','data2_23','data3_23']:
+                    if row[data]:
+                        data_all.append(data)
+        for p in ['pagamento','pagamento2', 'pagamento3', 'pagamento1_22', 'pagamento2_23', 'pagamento3_23']:
+            if row[p]:
+                pagamento.append(p)
+        for imp in ['importo1','importo2','importo3','importo1_22','importo2_23','importo3_23']:
+            if row[imp]:
+                importo.append(imp)
+        return pagamento, importo, data_all
+
+
+    def check_len(self,pagamenti_genitore):
+        tot = 0
+        pagamenti = pagamenti_genitore.query(columns='$iscritto,$isc_cod_fisc,$data,$modalita,$importo').fetch()
+        for i in pagamenti:
+            tot += 1
+        return tot
+
+    def check_if_exists(self,pagamenti_genitore,new_row):
+        pagamenti = pagamenti_genitore.query(columns='$iscritto,$isc_cod_fisc,$data,$modalita,$importo').fetch()
+        for i in pagamenti:
+            i = dict(i)
+            if new_row['isc_cod_fisc'] == i['isc_cod_fisc']:
+                if new_row['data'] == i['data'] and new_row['modalita'] == i['modalita'] and new_row['importo'] == i['importo']:
+                    return None
+        return 'non presente'

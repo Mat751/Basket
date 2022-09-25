@@ -14,7 +14,7 @@ if __name__ == '__main__':
     
 
     #store belfiore - comune e provincia
-    file = '/home/zattew/sviluppo/genropy_projects/basket/packages/ball/lib/codici_comuni.txt'
+    file = '/app/genropy_projects/Basket/packages/ball/lib/codici_comuni.txt'
     d={}
     with open(file) as f1:
         for line in f1:
@@ -24,7 +24,7 @@ if __name__ == '__main__':
     f1.close()
 
     #store belfiore estero
-    file = '/home/zattew/sviluppo/genropy_projects/basket/packages/ball/lib/Stato_Codice_AT.txt'
+    file = '/app/genropy_projects/Basket/packages/ball/lib/Stato_Codice_AT.txt'
     d_estero={}
     with open(file) as f1:
         for line in f1:
@@ -48,7 +48,7 @@ if __name__ == '__main__':
 
     #leggo iscritti
     conta = 1
-    file = '/home/zattew/sviluppo/genropy_projects/basket/packages/ball/lib/iscritti_fip.txt'
+    file = '/app/genropy_projects/Basket/packages/ball/lib/iscritti_fip.txt'
     with open(file) as f1:
         for line in f1:
             info = line.split()

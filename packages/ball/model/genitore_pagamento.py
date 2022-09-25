@@ -6,20 +6,17 @@ class Table(object):
         tbl=pkg.table('genitore_pagamento', pkey='id', name_long='Pagamento genitore', name_plural='Pagamento genitori',caption_field='protocollo')
         self.sysFields(tbl)
         
+        tbl.column('codice_iscritto',size='22', group='_', name_long='Iscritto'
+                    ).relation('iscritto.id', relation_name='iscrittipagamenti', mode='foreignkey', onDelete='cascade')
+        tbl.column('iscritto', name_long='Iscritto')
+        tbl.column('isc_cod_fisc', name_long='Iscritto CF')
         tbl.column('protocollo', name_long='Protocollo')
         tbl.column('genitore', name_long='Genitore')
         tbl.column('gen_cod_fisc', name_long='Codice fiscale')
-        tbl.column('iscritto', name_long='iscritto')
-        tbl.column('isc_cod_fisc', name_long='Iscritto CF')
 
-        tbl.column('data', dtype='D', name_long='Data Pagamento 1')
-        tbl.column('modalita', name_long='Tipo pagamento 1')
-        tbl.column('importo', dtype='N', name_long='Importo 1')
-        
-        tbl.column('data2', dtype='D', name_long='Data Pagamento 2')
-        tbl.column('modalita2', name_long='Tipo pagamento 2')
-        tbl.column('importo2', dtype='N', name_long='Importo 2')
-        tbl.column('totale', dtype='N', name_long='Totale')
+        tbl.column('data', dtype='D', name_long='Data Pagamento')
+        tbl.column('modalita', name_long='Tipo pagamento')
+        tbl.column('importo', dtype='N', name_long='Importo')
         
 
     def defaultValues(self):

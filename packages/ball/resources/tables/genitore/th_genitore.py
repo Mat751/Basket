@@ -37,8 +37,6 @@ class Form(BaseComponent):
         tc = form.center.tabContainer(margin='2px')
         self.dati_iscritto(tc.borderContainer(title='Dati iscritto'))
         self.allegati(tc.contentPane(title='Allegati genitore'))
-        self.fatture2021(tc.contentPane(title='Pagamenti 2021'))
-        self.fatture2022(tc.contentPane(title='Pagamenti 2022'))
 
     @customizable    
     def dati_iscritto(self,bc):
@@ -69,11 +67,5 @@ class Form(BaseComponent):
 
     def th_options(self):
         return dict(dialog_height='400px', dialog_width='600px')
-    
-    def fatture2021(self,pane):
-        pane.plainTableHandler(relation='@pagamenti_genitori',viewResource='ViewFromGenitore2021')
-    
-    def fatture2022(self,pane):
-        pane.plainTableHandler(relation='@pagamenti_genitori',viewResource='ViewFromGenitore2022')
     
 
