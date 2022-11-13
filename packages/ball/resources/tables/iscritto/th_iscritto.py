@@ -206,7 +206,7 @@ class Form(BaseComponent):
         center = center.tabContainer(title=f'Pagamenti {anno}',region='center')
         fb = center.formbuilder(cols=1, border_spacing='4px',width='auto')
 
-        mod = 'Paypal:Paypal,Bonifico:Bonifico,Assegno:Assegno,Altro:Altro'
+        mod = 'Paypal:Paypal,Bonifico:Bonifico,Assegno:Assegno,Altro:Altro,Annulla:Annulla'
         fb.filteringSelect('^.pagamento1_22',lbl='Tipo pagamento 1: ', 
                        tooltip="""Seleziona ruolo""",
                        values=mod)
@@ -267,8 +267,12 @@ class Form(BaseComponent):
             r = dict(r)
             pagamento, importo, data= self.controllo_importo_pagamento(r)
             if pagamento != [] and importo != [] and data != []:
-                for number_of_payment in range(len(pagamento)):
-                    if r['codice_fiscale_genitore']:
+                tutti_pagamenti =  range(len(pagamento))
+                for number_of_payment in tutti_pagamenti:
+                    if r[pagamento[number_of_payment]] == 'Annulla':
+                        #TODO fare funzione per cancellare nella tabella pagamenti genitore dove è stato messo Annulla
+                        continue
+                    if r['codice_fiscale_genitore'] and r[pagamento[number_of_payment]] != 'Annulla':
                                 new_row= { 'genitore':r['cognome_genitore'] + ' ' + r['nome_genitore'],
                                            'gen_cod_fisc':r['codice_fiscale_genitore'],
                                            'codice_iscritto': r['id'],

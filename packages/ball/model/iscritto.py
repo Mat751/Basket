@@ -32,7 +32,7 @@ class Table(object):
         tbl.column('anni', dtype='N', name_long='Anni')
         tbl.column('categoria', name_long='Categoria')
 
-        tbl.column('telefono', dtype='N', name_long='Telefono')
+        tbl.column('telefono', name_long='Telefono')
         tbl.column('altezza', dtype='N', name_long='Altezza')
         tbl.column('ruolo', name_long='Ruolo')
         tbl.column('voto', name_long='Valutazione')
